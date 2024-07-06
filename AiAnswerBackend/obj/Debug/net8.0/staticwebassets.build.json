@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "8V1e1xwZaZxW50gCXf0/i+Bq8sgAJ2CDCX5DXBTmtco=",
+  "Source": "AiAnswerBackend",
+  "BasePath": "_content/AiAnswerBackend",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
