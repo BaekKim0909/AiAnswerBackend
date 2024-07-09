@@ -21,7 +21,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(
 builder.Services.AddScoped<IUserRepository,UserRepositroy>();
 //注册Jwt设置
 builder.Services.Configure<JwtSetting>(builder.Configuration.GetSection("Jwt"));
-
+//身份验证
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     var jwtSetting = builder.Configuration.GetSection("Jwt").Get<JwtSetting>();
@@ -35,10 +35,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSetting.JwtSecretKey)) // 替换为你的密钥
     };
 });
+//授权
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("Admin", policy => policy.RequireClaim("userRole", "admin"));
     options.AddPolicy("User", policy => policy.RequireClaim("userRole", "user"));
+    options.AddPolicy("User&Admin",policy => policy.RequireClaim("userRole", "user","admin"));
 });
 var app = builder.Build();
 

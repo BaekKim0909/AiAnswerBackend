@@ -5,7 +5,7 @@ namespace AiAnswerBackend.Model;
 [Table("user")]//表名
 public class User
 {
-    
+    [Column(TypeName = "char(36)")]
     public Guid Id { get; set; }
     
     [Required]

@@ -2,6 +2,7 @@ using System.IdentityModel.Tokens.Jwt;
 using AiAnswerBackend.Dtos.User;
 using AiAnswerBackend.Interfaces;
 using AiAnswerBackend.Utils;
+using AiAnswerBackend.Vo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -26,9 +27,12 @@ namespace AiAnswerBackend.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<string>> UserRegister(UserRegisterRequest? userRegister)
         {
-            if (userRegister == null)
+            string userAccount = userRegister.UserAccount;
+            string userPassword = userRegister.UserPassword;
+            string checkedPassword = userRegister.CheckedPassword;
+            if (string.IsNullOrWhiteSpace(userAccount) || string.IsNullOrWhiteSpace(userPassword))
             {
-                return BadRequest("用户为空");
+                return BadRequest("用户名或密码不能为空");
             }
 
             if (userRegister.UserPassword != userRegister.CheckedPassword)
@@ -66,14 +70,31 @@ namespace AiAnswerBackend.Controllers
             {
                 return NotFound("密码错误");
             }
-            return JwtUtils.GenerateToken(user.Id, user.UserRole);
+            return JwtUtils.GenerateToken(user.Id,user.UserAccount, user.UserRole);
         }
-        [Authorize(Policy = "user")]
+        [Authorize(Policy = "User&Admin")]
+        [HttpGet("userInfo")]
+        public async Task<ActionResult<UserVO>> GetLoginUser()
+        {
+            string userIdString = HttpContext.User.FindFirst("userId").Value;
+            if (!Guid.TryParse(userIdString, out Guid userId))
+            {
+                // 处理无法转换为 Guid 的情况
+                return BadRequest("无效的用户 ID");
+            } 
+            var userVo= await _userRepository.GetUserInfoById(userId);
+            if (userVo == null)
+            {
+                return BadRequest("尚未登录");
+            }
+            return Ok(userVo);
+        }
+        [Authorize(Policy = "User")]
         [HttpGet("test")]
         public async Task<string> Test()
         {
-            var userRole = User.FindFirst("userRole").Value;
-            var userId = User.FindFirst("userId").Value;
+            var userRole = User.FindFirst("userRole")?.Value;
+            var userId = User.FindFirst("userId")?.Value;
             return "OK"+userRole+userId;
         }
     }

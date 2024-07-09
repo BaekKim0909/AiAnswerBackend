@@ -238,3 +238,4 @@
 /Users/baihaiyang/RiderProjects/AiAnswerBackend/AiAnswerBackend/bin/Debug/net8.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 /Users/baihaiyang/RiderProjects/AiAnswerBackend/AiAnswerBackend/bin/Debug/net8.0/Microsoft.IdentityModel.Tokens.dll
 /Users/baihaiyang/RiderProjects/AiAnswerBackend/AiAnswerBackend/bin/Debug/net8.0/System.IdentityModel.Tokens.Jwt.dll
+/Users/baihaiyang/RiderProjects/AiAnswerBackend/AiAnswerBackend/obj/Debug/net8.0/AiAnswerBackend.sourcelink.json

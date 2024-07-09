@@ -19,6 +19,129 @@ namespace AiAnswerBackend.Migrations
                 .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("AiAnswerBackend.Model.App", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("AppDesc")
+                        .HasColumnType("varchar(2048)");
+
+                    b.Property<string>("AppIcon")
+                        .HasColumnType("varchar(1024)");
+
+                    b.Property<string>("AppName")
+                        .IsRequired()
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<byte>("AppType")
+                        .HasColumnType("tinyint unsigned");
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid>("CreateUserId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("ReviewMessage")
+                        .HasColumnType("varchar(512)");
+
+                    b.Property<byte>("ReviewStatus")
+                        .HasColumnType("tinyint unsigned");
+
+                    b.Property<DateTime>("ReviewTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid>("ReviewerId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<byte>("ScoreStrategy")
+                        .HasColumnType("tinyint unsigned");
+
+                    b.Property<DateTime>("UpdateTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppName");
+
+                    b.ToTable("app");
+                });
+
+            modelBuilder.Entity("AiAnswerBackend.Model.Question", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("AppId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid>("CreateUserId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("QuestionContent")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("UpdateTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppId");
+
+                    b.ToTable("question");
+                });
+
+            modelBuilder.Entity("AiAnswerBackend.Model.ScoringResult", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("AppId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("ResultDesc")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ResultName")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("ResultPicture")
+                        .IsRequired()
+                        .HasColumnType("varchar(1024)");
+
+                    b.Property<string>("ResultProp")
+                        .IsRequired()
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<int>("ResultScoreRange")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdateTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppId");
+
+                    b.ToTable("scoring_result");
+                });
+
             modelBuilder.Entity("AiAnswerBackend.Model.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -28,12 +151,12 @@ namespace AiAnswerBackend.Migrations
                     b.Property<DateTime>("CreateTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
-                        .HasDefaultValue(new DateTime(2024, 7, 4, 19, 51, 53, 365, DateTimeKind.Local).AddTicks(5560));
+                        .HasDefaultValue(new DateTime(2024, 7, 9, 22, 46, 55, 869, DateTimeKind.Local).AddTicks(180));
 
                     b.Property<DateTime>("UpdateTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
-                        .HasDefaultValue(new DateTime(2024, 7, 4, 19, 51, 53, 365, DateTimeKind.Local).AddTicks(5880));
+                        .HasDefaultValue(new DateTime(2024, 7, 9, 22, 46, 55, 869, DateTimeKind.Local).AddTicks(550));
 
                     b.Property<string>("UserAccount")
                         .IsRequired()
@@ -59,6 +182,59 @@ namespace AiAnswerBackend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("user");
+                });
+
+            modelBuilder.Entity("AiAnswerBackend.Model.UserAnswer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("AppId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<byte>("AppType")
+                        .HasColumnType("tinyint unsigned");
+
+                    b.Property<string>("Choices")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("ResultDesc")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("ResultId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("ResultName")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("ResultPicture")
+                        .IsRequired()
+                        .HasColumnType("varchar(1024)");
+
+                    b.Property<int>("ResultScore")
+                        .HasColumnType("int");
+
+                    b.Property<byte>("ScoreStrategy")
+                        .HasColumnType("tinyint unsigned");
+
+                    b.Property<DateTime>("UpdateTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppId", "UserId");
+
+                    b.ToTable("user_answer");
                 });
 #pragma warning restore 612, 618
         }

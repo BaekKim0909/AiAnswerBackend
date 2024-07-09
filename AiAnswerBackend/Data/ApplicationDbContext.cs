@@ -10,8 +10,12 @@ public class ApplicationDbContext:DbContext
         
     }
     
-    public DbSet<User> users { get; set; }
-    
+    public DbSet<User> Users { get; set; }
+    public DbSet<App> Apps { get; set; }
+    public DbSet<Question> Questions { get; set; }
+    public DbSet<ScoringResult> ScoringResults { get; set; }
+    public DbSet<UserAnswer> UserAnswers { get; set; }
+        
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
