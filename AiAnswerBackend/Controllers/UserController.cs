@@ -1,6 +1,8 @@
 using System.IdentityModel.Tokens.Jwt;
+using AiAnswerBackend.Common;
 using AiAnswerBackend.Dtos.User;
 using AiAnswerBackend.Interfaces;
+using AiAnswerBackend.Model;
 using AiAnswerBackend.Utils;
 using AiAnswerBackend.Vo;
 using Microsoft.AspNetCore.Authorization;
@@ -72,6 +74,8 @@ namespace AiAnswerBackend.Controllers
             }
             return JwtUtils.GenerateToken(user.Id,user.UserAccount, user.UserRole);
         }
+        
+        //获取当前登录用户信息
         [Authorize(Policy = "User&Admin")]
         [HttpGet("userInfo")]
         public async Task<ActionResult<UserVO>> GetLoginUser()
@@ -82,7 +86,7 @@ namespace AiAnswerBackend.Controllers
                 // 处理无法转换为 Guid 的情况
                 return BadRequest("无效的用户 ID");
             } 
-            var userVo= await _userRepository.GetUserInfoById(userId);
+            var userVo= await _userRepository.GetUserInfoByIdAsync(userId);
             if (userVo == null)
             {
                 return BadRequest("尚未登录");
@@ -96,6 +100,34 @@ namespace AiAnswerBackend.Controllers
             var userRole = User.FindFirst("userRole")?.Value;
             var userId = User.FindFirst("userId")?.Value;
             return "OK"+userRole+userId;
+        }
+        //管理员：查询所有用户信息
+        [Authorize(Policy = "Admin")]
+        [HttpPost("users")]
+        public async Task<ActionResult<PageResponse<User>>> GetAllUser(UserQueryRequest userQueryRequest)
+        {
+            if (! string.IsNullOrWhiteSpace(userQueryRequest.Id))
+            {
+                if (! Guid.TryParse(userQueryRequest.Id,out Guid id))
+                {
+                    return BadRequest("Id格式错误");
+                }
+            }
+            var pageUser =await _userRepository.GetUsersByQueryAsync(userQueryRequest);
+            var page = new PageResponse<User>(pageUser.Total,pageUser.Records);
+            return Ok(page);
+        }
+        //管理员:删除用户
+        [Authorize(Policy = "Admin")]
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<string>> DeleteUserById([FromRoute] Guid id)
+        {
+            var result = await _userRepository.DeleteUserByIdAsync(id);
+            if (result)
+            {
+                return Ok("删除成功！！！！");
+            }
+            return NoContent();
         }
     }
 }

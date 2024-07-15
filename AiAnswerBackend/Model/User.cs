@@ -33,5 +33,7 @@ public class User
     public DateTime CreateTime { get; set; } = DateTime.Now;
 
     public DateTime UpdateTime { get; set; } = DateTime.Now;
-
+    
+    // 0--正常 1--删除
+    public byte IsDelete { get; set; }
 }

@@ -10,7 +10,8 @@ public class Question
     //题目ID
     public Guid Id { get; set; }
     
-    //题目内容(JSON格式)
+    //题目内容(包含：题目和选项JSON格式)
+    [Column(TypeName = "text")]
     public string QuestionContent { get; set; }
     
     //题目所属应用ID
@@ -27,4 +28,6 @@ public class Question
     //更新时间
     public DateTime UpdateTime { get; set; }
     
+    //删除
+    public byte IsDelete { get; set; }
 }

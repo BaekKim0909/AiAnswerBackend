@@ -45,4 +45,6 @@ public class ScoringResult
     //更新时间
     [Required]
     public DateTime UpdateTime { get; set; }
+    
+    public byte IsDelete { get; set; }
 }

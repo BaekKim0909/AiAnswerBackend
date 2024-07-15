@@ -55,4 +55,7 @@ public class UserAnswer
     //更新时间
     [Required]
     public DateTime UpdateTime { get; set; }
+    
+    //是否删除
+    public byte IsDelete { get; set; }
 }

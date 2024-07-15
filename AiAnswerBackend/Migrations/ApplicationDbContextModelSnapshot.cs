@@ -36,7 +36,9 @@ namespace AiAnswerBackend.Migrations
                         .HasColumnType("varchar(256)");
 
                     b.Property<byte>("AppType")
-                        .HasColumnType("tinyint unsigned");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint unsigned")
+                        .HasDefaultValue((byte)0);
 
                     b.Property<DateTime>("CreateTime")
                         .HasColumnType("datetime(6)");
@@ -44,20 +46,29 @@ namespace AiAnswerBackend.Migrations
                     b.Property<Guid>("CreateUserId")
                         .HasColumnType("char(36)");
 
+                    b.Property<byte>("IsDelete")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint unsigned")
+                        .HasDefaultValue((byte)0);
+
                     b.Property<string>("ReviewMessage")
                         .HasColumnType("varchar(512)");
 
                     b.Property<byte>("ReviewStatus")
-                        .HasColumnType("tinyint unsigned");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint unsigned")
+                        .HasDefaultValue((byte)0);
 
-                    b.Property<DateTime>("ReviewTime")
+                    b.Property<DateTime?>("ReviewTime")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<Guid>("ReviewerId")
+                    b.Property<Guid?>("ReviewerId")
                         .HasColumnType("char(36)");
 
                     b.Property<byte>("ScoreStrategy")
-                        .HasColumnType("tinyint unsigned");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint unsigned")
+                        .HasDefaultValue((byte)0);
 
                     b.Property<DateTime>("UpdateTime")
                         .HasColumnType("datetime(6)");
@@ -84,9 +95,12 @@ namespace AiAnswerBackend.Migrations
                     b.Property<Guid>("CreateUserId")
                         .HasColumnType("char(36)");
 
+                    b.Property<byte>("IsDelete")
+                        .HasColumnType("tinyint unsigned");
+
                     b.Property<string>("QuestionContent")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("UpdateTime")
                         .HasColumnType("datetime(6)");
@@ -109,6 +123,9 @@ namespace AiAnswerBackend.Migrations
 
                     b.Property<DateTime>("CreateTime")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<byte>("IsDelete")
+                        .HasColumnType("tinyint unsigned");
 
                     b.Property<string>("ResultDesc")
                         .IsRequired()
@@ -151,12 +168,15 @@ namespace AiAnswerBackend.Migrations
                     b.Property<DateTime>("CreateTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
-                        .HasDefaultValue(new DateTime(2024, 7, 9, 22, 46, 55, 869, DateTimeKind.Local).AddTicks(180));
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<byte>("IsDelete")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint unsigned")
+                        .HasDefaultValue((byte)0);
 
                     b.Property<DateTime>("UpdateTime")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime(6)")
-                        .HasDefaultValue(new DateTime(2024, 7, 9, 22, 46, 55, 869, DateTimeKind.Local).AddTicks(550));
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("UserAccount")
                         .IsRequired()
@@ -202,6 +222,9 @@ namespace AiAnswerBackend.Migrations
 
                     b.Property<DateTime>("CreateTime")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<byte>("IsDelete")
+                        .HasColumnType("tinyint unsigned");
 
                     b.Property<string>("ResultDesc")
                         .IsRequired()

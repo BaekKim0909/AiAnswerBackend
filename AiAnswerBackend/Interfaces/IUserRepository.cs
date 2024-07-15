@@ -1,3 +1,4 @@
+using AiAnswerBackend.Common;
 using AiAnswerBackend.Dtos.User;
 using AiAnswerBackend.Model;
 using AiAnswerBackend.Vo;
@@ -11,6 +12,12 @@ public interface IUserRepository
 
     public Task<User?> GetUserByUserAccountAsync(string userAccount);
 
-    public Task<UserVO?> GetUserInfoById(Guid id);
+    public Task<UserVO?> GetUserInfoByIdAsync(Guid id);
+
+    //分页查询
+    public Task<PageResult<User>> GetUsersByQueryAsync(UserQueryRequest userQueryRequest);
+    
+    //删除用户
+    public Task<Boolean> DeleteUserByIdAsync(Guid id);
 
 }
