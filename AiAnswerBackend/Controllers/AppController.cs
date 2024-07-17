@@ -21,7 +21,7 @@ namespace AiAnswerBackend.Controllers
             _appRepository = appRepository;
         }
         [Authorize(Policy = "User&Admin")]
-        [HttpPost("addApp")]
+        [HttpPost("add")]
         //创建App
         public async Task<ActionResult<string>> AddAppAsync(AppAddRequest appAddRequest)
         {
@@ -124,6 +124,28 @@ namespace AiAnswerBackend.Controllers
             var userVo = user.ToUserVOFromUser();
             appVo.UserVo = userVo;
             return Ok(appVo);
+        }
+        //修改App
+        [HttpPost("update")]
+        public async Task<ActionResult<string>> updateAppByUd(AppUpdateRequest appUpdateRequest)
+        {
+            
+            if (string.IsNullOrWhiteSpace(appUpdateRequest.Id))
+            {
+                return BadRequest("id不能为空");
+            }
+
+            if (!Guid.TryParse(appUpdateRequest.Id, out Guid AppId))
+            {
+                return BadRequest("id格式错误");
+            }
+            var result = await _appRepository.UpdateAppByIdAsync(appUpdateRequest);
+            if (!result)
+            {
+                return BadRequest("修改失败");
+            }
+
+            return Ok("更新成功");
         }
     }
 }

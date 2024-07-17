@@ -17,5 +17,5 @@ public interface IAppRepository
 
     public Task<User> GetUserByCreateUserIdAsync(Guid id);
 
-
+    public Task<bool> UpdateAppByIdAsync(AppUpdateRequest app);
 }

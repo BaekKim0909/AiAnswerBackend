@@ -2,7 +2,9 @@ namespace AiAnswerBackend.Dtos.Question;
 
 public class QuestionContent
 {
+    //题目标题(题目名)
     public String Title { get; set; }
+    //题目选项列表
     public List<Option> Options { get; set; }
     
     public QuestionContent(string title, List<Option> options)

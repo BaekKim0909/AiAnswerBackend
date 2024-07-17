@@ -96,7 +96,9 @@ namespace AiAnswerBackend.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<byte>("IsDelete")
-                        .HasColumnType("tinyint unsigned");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint unsigned")
+                        .HasDefaultValue((byte)0);
 
                     b.Property<string>("QuestionContent")
                         .IsRequired()
@@ -166,9 +168,7 @@ namespace AiAnswerBackend.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<DateTime>("CreateTime")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime(6)")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<byte>("IsDelete")
                         .ValueGeneratedOnAdd()

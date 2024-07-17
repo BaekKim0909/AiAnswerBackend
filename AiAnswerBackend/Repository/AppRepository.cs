@@ -65,5 +65,24 @@ public class AppRepository:IAppRepository
         var user =  await _applicationDbContext.Users.FirstOrDefaultAsync(item => item.Id == id);
         return user;
     }
-    
+
+    public async Task<bool> UpdateAppByIdAsync(AppUpdateRequest app)
+    {
+        var appId = new Guid(app.Id);
+        var oldApp = await _applicationDbContext.Apps.FirstOrDefaultAsync(item => item.Id == appId);
+        if (oldApp == null)
+        {
+            return false;
+        }
+
+        oldApp.AppName = app.AppName;
+        oldApp.AppDesc = app.AppDesc;
+        oldApp.AppIcon = app.AppIcon;
+        oldApp.AppType = app.AppType;
+        oldApp.ScoreStrategy = app.ScoringStrategy;
+        
+        await _applicationDbContext.SaveChangesAsync();
+        
+        return true;
+    }
 }

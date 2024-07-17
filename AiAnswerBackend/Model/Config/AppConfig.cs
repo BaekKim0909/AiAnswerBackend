@@ -12,7 +12,9 @@ public class AppConfig:IEntityTypeConfiguration<App>
         builder.Property(item => item.AppType).HasDefaultValue(0);
         builder.Property(item => item.ScoreStrategy).HasDefaultValue(0);
         builder.Property(item => item.ReviewStatus).HasDefaultValue(0);
-
+        //设置索引
+        builder.HasIndex(item => item.AppName);
+        
         //设置软删除
         builder.HasQueryFilter(item => item.IsDelete == 0);
     }
