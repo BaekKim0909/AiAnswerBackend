@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AiAnswerBackend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a72162c2c343100f7fbc68105ea830beaefa5b73")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5675a4577ff756cd24cef30ef5a5bcef199d0c8f")]
 [assembly: System.Reflection.AssemblyProductAttribute("AiAnswerBackend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AiAnswerBackend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

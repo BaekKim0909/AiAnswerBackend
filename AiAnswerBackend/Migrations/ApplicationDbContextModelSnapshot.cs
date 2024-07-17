@@ -127,7 +127,9 @@ namespace AiAnswerBackend.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<byte>("IsDelete")
-                        .HasColumnType("tinyint unsigned");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint unsigned")
+                        .HasDefaultValue((byte)0);
 
                     b.Property<string>("ResultDesc")
                         .IsRequired()
@@ -214,7 +216,9 @@ namespace AiAnswerBackend.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<byte>("AppType")
-                        .HasColumnType("tinyint unsigned");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint unsigned")
+                        .HasDefaultValue((byte)0);
 
                     b.Property<string>("Choices")
                         .IsRequired()
@@ -224,7 +228,9 @@ namespace AiAnswerBackend.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<byte>("IsDelete")
-                        .HasColumnType("tinyint unsigned");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint unsigned")
+                        .HasDefaultValue((byte)0);
 
                     b.Property<string>("ResultDesc")
                         .IsRequired()
@@ -245,7 +251,9 @@ namespace AiAnswerBackend.Migrations
                         .HasColumnType("int");
 
                     b.Property<byte>("ScoreStrategy")
-                        .HasColumnType("tinyint unsigned");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint unsigned")
+                        .HasDefaultValue((byte)0);
 
                     b.Property<DateTime>("UpdateTime")
                         .HasColumnType("datetime(6)");
@@ -254,6 +262,10 @@ namespace AiAnswerBackend.Migrations
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppId");
+
+                    b.HasIndex("UserId");
 
                     b.HasIndex("AppId", "UserId");
 

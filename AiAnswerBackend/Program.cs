@@ -21,6 +21,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(
 builder.Services.AddScoped<IUserRepository,UserRepository>();
 builder.Services.AddScoped<IAppRepository,AppRepository>();
 builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
+builder.Services.AddScoped<IScoringResultRepository, ScoringResultRepository>();
 //注册Jwt设置
 builder.Services.Configure<JwtSetting>(builder.Configuration.GetSection("Jwt"));
 //身份验证
