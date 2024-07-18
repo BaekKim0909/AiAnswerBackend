@@ -80,4 +80,28 @@ public class ScoringResultRepository:IScoringResultRepository
             .Take(scoringResultQueryRequest.PageSize).ToListAsync();
         return new PageResult<ScoringResult>(total, list);
     }
+
+    public async Task<bool> DeleteScoringResultByIdAsync(Guid id)
+    {
+         var scoringResult = await _applicationDbContext.ScoringResults.FirstOrDefaultAsync(item => item.Id == id);
+         if (scoringResult == null)
+         {
+             return false;
+         }
+         scoringResult.IsDelete = 1;
+         int result = await _applicationDbContext.SaveChangesAsync();
+         if (result > 0)
+         {
+             return true;
+         }
+
+         return false;
+    }
+
+    public async Task<List<ScoringResult>> GetScoringResultListByAppIdAsync(Guid appId)
+    {
+        var scoringResults =await _applicationDbContext.ScoringResults.Where(item => item.AppId == appId)
+            .OrderByDescending(item => item.ResultScoreRange).ToListAsync();
+        return scoringResults;
+    }
 }

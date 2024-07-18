@@ -110,5 +110,29 @@ namespace AiAnswerBackend.Controllers
 
             return Ok(new PageResponse<ScoringResultVO>(result.Total, list));
         }
+
+        [Authorize(Policy = "User&Admin")]
+        [HttpDelete("delete/{id}")]
+        public async Task<ActionResult<string>> DeleteScoringResultById([FromRoute]string id)
+        {
+            if (!Guid.TryParse(id, out Guid scoringResultId))
+            {
+                return BadRequest("参数错误");
+            }
+
+            var oldScoringResult = await _scoringResultRepository.GetScoringResultByIdAsync(scoringResultId);
+            if (oldScoringResult == null)
+            {
+                return BadRequest("评分结果不存在");
+            }
+
+            var result = await _scoringResultRepository.DeleteScoringResultByIdAsync(scoringResultId);
+            if (!result)
+            {
+                return BadRequest("添加失败");
+            }
+            
+            return Ok("删除成功");
+        }
     }
 }

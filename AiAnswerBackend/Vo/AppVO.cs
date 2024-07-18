@@ -18,7 +18,7 @@ public class AppVO
     public byte AppType { get;set; }
     
     //评分策略  0--自定义 1--AI
-    public byte ScoreStrategy { get; set; }
+    public byte ScoringStrategy { get; set; }
     
     //审核状态  0--待审核 1--通过 2--拒绝
     public byte ReviewStatus { get; set; }

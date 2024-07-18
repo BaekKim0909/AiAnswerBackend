@@ -16,9 +16,13 @@ public class QuestionContent
 
     public class Option
     {
+        //结果(如：I/S/T/P)
         public string Result { get; set; }
+        //得分
         public int Score { get; set; }
+        //选项内容
         public string Value { get; set; }
+        //选项
         public string Key { get; set; }
 
         public Option(string result, int score, string value, string key)

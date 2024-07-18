@@ -1,6 +1,6 @@
 namespace AiAnswerBackend.Vo;
 
-public class UserVO
+public class  UserVO
 {
     public string UserAccount { get; set; }
     

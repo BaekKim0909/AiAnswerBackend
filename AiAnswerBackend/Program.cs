@@ -3,6 +3,7 @@ using AiAnswerBackend.Config;
 using AiAnswerBackend.Data;
 using AiAnswerBackend.Interfaces;
 using AiAnswerBackend.Repository;
+using AiAnswerBackend.Scoring;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -22,6 +23,10 @@ builder.Services.AddScoped<IUserRepository,UserRepository>();
 builder.Services.AddScoped<IAppRepository,AppRepository>();
 builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
 builder.Services.AddScoped<IScoringResultRepository, ScoringResultRepository>();
+builder.Services.AddScoped<IUserAnswerRepository, UserAnswerRepository>();
+builder.Services.AddScoped<CustomScoreScoringStrategy>();
+builder.Services.AddScoped<CustomTestScoringStrategy>();
+builder.Services.AddScoped<ScoringStrategyContext>();
 //注册Jwt设置
 builder.Services.Configure<JwtSetting>(builder.Configuration.GetSection("Jwt"));
 //身份验证

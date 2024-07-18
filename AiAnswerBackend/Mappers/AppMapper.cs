@@ -31,7 +31,7 @@ public static class AppMapper
             AppDesc = app.AppDesc,
             AppIcon = app.AppIcon,
             AppType = app.AppType,
-            ScoreStrategy = app.ScoreStrategy,
+            ScoringStrategy = app.ScoreStrategy,
             ReviewMessage = app.ReviewMessage,
             ReviewStatus = app.ReviewStatus,
             ReviewerId = app.ReviewerId,

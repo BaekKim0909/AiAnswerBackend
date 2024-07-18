@@ -16,4 +16,8 @@ public interface IScoringResultRepository
     public Task<bool> UpdateScoringResultAsync(ScoringResult newScoringResult);
     //根据查询条件查询
     public Task<PageResult<ScoringResult>> GetScoringResultListByQueryAsync(ScoringResultQueryRequest scoringResultQueryRequest);
+    //根据AppId查询ScoringResult并按分数降序排序
+    public Task<List<ScoringResult>> GetScoringResultListByAppIdAsync(Guid appId);
+    //根据Id删除评分结果
+    public Task<bool> DeleteScoringResultByIdAsync(Guid id);
 }
