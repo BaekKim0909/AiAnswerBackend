@@ -1,8 +1,10 @@
 using System.Text.Json;
 using AiAnswerBackend.Dtos.UserAnswer;
 using AiAnswerBackend.Interfaces;
+using AiAnswerBackend.Mappers;
 using AiAnswerBackend.Model;
 using AiAnswerBackend.Scoring;
+using AiAnswerBackend.Vo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,14 +16,16 @@ namespace AiAnswerBackend.Controllers
     public class UserAnswerController : ControllerBase
     {
         private readonly IUserAnswerRepository _userAnswerRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IAppRepository _appRepository;
         private readonly ScoringStrategyContext _scoringStrategyContext;
 
-        public UserAnswerController(IUserAnswerRepository userAnswerRepository, IAppRepository appRepository, ScoringStrategyContext scoringStrategyContext)
+        public UserAnswerController(IUserAnswerRepository userAnswerRepository, IAppRepository appRepository, ScoringStrategyContext scoringStrategyContext,IUserRepository userRepository)
         {
             _userAnswerRepository = userAnswerRepository;
             _appRepository = appRepository;
             _scoringStrategyContext = scoringStrategyContext;
+            _userRepository = userRepository;
         }
 
         [Authorize(Policy = "User&Admin")]
@@ -65,6 +69,32 @@ namespace AiAnswerBackend.Controllers
             }
 
             return Ok(userAnswerJudged.Id);
+        }
+        //根据id获取用户答案
+        [Authorize(Policy = "User&Admin")]
+        [HttpGet("getVo/{id}")]
+        public async Task<ActionResult<UserAnswerVO>> GetUserAnswerVOById([FromRoute]string id)
+        {
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                return BadRequest("id为空");
+            }
+
+            if (!Guid.TryParse(id,out Guid usId))
+            {
+                return BadRequest("Id格式不正确");
+            }
+
+            var userAnswer = await _userAnswerRepository.GetUserAnswerByIdAsync(usId);
+
+            if (userAnswer == null)
+            {
+                return BadRequest("用户答案不存在");
+            }
+
+            var userAnswerVo = userAnswer.ToVoFromUserAnswer();
+            userAnswerVo.User = await _userRepository.GetUserInfoByIdAsync(userAnswer.UserId);
+            return Ok(userAnswerVo);
         }
     }
 }

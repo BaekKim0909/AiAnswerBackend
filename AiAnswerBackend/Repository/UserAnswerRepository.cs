@@ -1,6 +1,7 @@
 using AiAnswerBackend.Data;
 using AiAnswerBackend.Interfaces;
 using AiAnswerBackend.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace AiAnswerBackend.Repository;
 
@@ -23,5 +24,11 @@ public class UserAnswerRepository:IUserAnswerRepository
         }
 
         return false;
+    }
+
+    public async Task<UserAnswer?> GetUserAnswerByIdAsync(Guid id)
+    {
+        var userAnswer = await _applicationDbContext.UserAnswers.FirstOrDefaultAsync(item => item.Id == id);
+        return userAnswer;
     }
 }

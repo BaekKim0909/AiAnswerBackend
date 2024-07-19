@@ -41,7 +41,7 @@ public class UserAnswer
     [Column(TypeName = "varchar(1024)")]
     public string ResultPicture { get; set; }
     
-    //结果得分范围
+    //结果得分
     public int ResultScore { get; set; }
     
     //创建用户ID
